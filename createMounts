@@ -1,47 +1,28 @@
-Script started on Thu Dec 26 03:03:14 2013
-[40m[33mMicroknoppix[1;33m[03:03:14][1;34m(0)[1;36m~[31m$[0m ls /dev/disk/
-by-id/    by-label/ by-path/  
-[40m[33mMicroknoppix[1;33m[03:03:14][1;34m(0)[1;36m~[31m$[0m ls /dev/disk/by-*
-/dev/disk/by-id:
-[0m[01;36mata-VBOX_CD-ROM_VB2-01700376[0m
-[01;36mata-VBOX_HARDDISK_VBa6120ead-62557b9e[0m
-[01;36mscsi-SATA_VBOX_HARDDISK_VBa6120ead-62557b9e[0m
-
-/dev/disk/by-label:
-[01;36mKNOPPIX[0m  [01;36mKNOPPIX_FS[0m
-
-/dev/disk/by-path:
-[01;36mpci-0000:00:01.1-scsi-0:0:0:0[0m  [01;36mpci-0000:00:0d.0-scsi-0:0:0:0[0m
-[40m[33mMicroknoppix[1;33m[03:20:19][1;34m(0)[1;36m~[31m$[0m ls /dev/disk/by-* id/*HARDDISK*
-[0m[01;36m/dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e[0m
-[01;36m/dev/disk/by-id/scsi-SATA_VBOX_HARDDISK_VBa6120ead-62557b9e[0m
-[40m[33mMicroknoppix[1;33m[03:24:18][1;34m(0)[1;36m~[31m$[0m ll !$
 ll /dev/disk/by-id/*HARDDISK*
+
 lrwxrwxrwx 1 root root 9 Dec 25 15:37 [0m[01;36m/dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e[0m -> [40;33;01m../../sda[0m[K
+
 lrwxrwxrwx 1 root root 9 Dec 25 15:37 [01;36m/dev/disk/by-id/scsi-SATA_VBOX_HARDDISK_VBa6120ead-62557b9e[0m -> [40;33;01m../../sda[0m[K
-[40m[33mMicroknoppix[1;33m[03:24:25][1;34m(0)[1;36m~[31m$[0m fdisk -l
+
+fdisk -l
 
 Disk /dev/sda: 8589 MB, 8589934592 bytes
+
 255 heads, 63 sectors/track, 1044 cylinders, total 16777216 sectors
+
 Units = sectors of 1 * 512 = 512 bytes
+
 Sector size (logical/physical): 512 bytes / 512 bytes
+
 I/O size (minimum/optimal): 512 bytes / 512 bytes
+
 Disk identifier: 0x00000000
 
 Disk /dev/sda doesn't contain a valid partition table
-[40m[33mMicroknoppix[1;33m[03:26:55][1;34m(0)[1;36m~[31m$[0m ls /dev/sd?
-[0m[40;33;01m/dev/sda[0m  [40;33;01m/dev/sdb[0m  [40;33;01m/dev/sdc[0m  [40;33;01m/dev/sdd[0m  [40;33;01m/dev/sde[0m  [40;33;01m/dev/sdf[0m  [40;33;01m/dev/sdg[0m  [40;33;01m/dev/sdh[0m
-[40m[33mMicroknoppix[1;33m[03:27:05][1;34m(0)[1;36m~[31m$[0m fdisk /dev/disk/b
-by-id/    by-label/ by-path/  
-[40m[33mMicroknoppix[1;33m[03:27:05][1;34m(0)[1;36m~[31m$[0m fdisk /dev/disk/by-id/a
-ata-VBOX_CD-ROM_VB2-01700376           ata-VBOX_HARDDISK_VBa6120ead-62557b9e
-[40m[33mMicroknoppix[1;33m[03:27:05][1;34m(0)[1;36m~[31m$[0m fdisk /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-622557b9e 
-Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel
-Building a new DOS disklabel with disk identifier 0xe3198e3d.
-Changes will remain in memory only, until you decide to write them.
-After that, of course, the previous content won't be recoverable.
 
-Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+ls /dev/sd?
+sudo fdisk /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62
+2557b9e
 
 Command (m for help): p
 
@@ -51,100 +32,39 @@ Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk identifier: 0xe3198e3d
-
-                                                Device Boot      Start         End      Blocks   Id  System
+Device Boot      Start         End      Blocks   Id  System
 
 Command (m for help): n
+
 Partition type:
    p   primary (0 primary, 0 extended, 4 free)
    e   extended
-Select (default p): 
+
+Select (default p):
 Using default response p
-Partition number (1-4, default 1): 
+Partition number (1-4, default 1):
 Using default value 1
-First sector (2048-16777215, default 2048): 
+First sector (2048-16777215, default 2048):
 Using default value 2048
-Last sector, +sectors or +size{K,M,G} (2048-16777215, default 16777215): 
+Last sector, +sectors or +size{K,M,G} (2048-16777215, default 16777215):
 Using default value 16777215
 
 Command (m for help): a
+
 Partition number (1-4): 1
 
 Command (m for help): t
+
 Selected partition 1
-Hex code (type L to list codes): L
-
- 0  Empty           24  NEC DOS         81  Minix / old Lin bf  Solaris        
- 1  FAT12           27  Hidden NTFS Win 82  Linux swap / So c1  DRDOS/sec (FAT-
- 2  XENIX root      39  Plan 9          83  Linux           c4  DRDOS/sec (FAT-
- 3  XENIX usr       3c  PartitionMagic  84  OS/2 hidden C:  c6  DRDOS/sec (FAT-
- 4  FAT16 <32M      40  Venix 80286     85  Linux extended  c7  Syrinx         
- 5  Extended        41  PPC PReP Boot   86  NTFS volume set da  Non-FS data    
- 6  FAT16           42  SFS             87  NTFS volume set db  CP/M / CTOS / .
- 7  HPFS/NTFS/exFAT 4d  QNX4.x          88  Linux plaintext de  Dell Utility   
- 8  AIX             4e  QNX4.x 2nd part 8e  Linux LVM       df  BootIt         
- 9  AIX bootable    4f  QNX4.x 3rd part 93  Amoeba          e1  DOS access     
- a  OS/2 Boot Manag 50  OnTrack DM      94  Amoeba BBT      e3  DOS R/O        
- b  W95 FAT32       51  OnTrack DM6 Aux 9f  BSD/OS          e4  SpeedStor      
- c  W95 FAT32 (LBA) 52  CP/M            a0  IBM Thinkpad hi eb  BeOS fs        
- e  W95 FAT16 (LBA) 53  OnTrack DM6 Aux a5  FreeBSD         ee  GPT            
- f  W95 Ext'd (LBA) 54  OnTrackDM6      a6  OpenBSD         ef  EFI (FAT-12/16/
-10  OPUS            55  EZ-Drive        a7  NeXTSTEP        f0  Linux/PA-RISC b
-11  Hidden FAT12    56  Golden Bow      a8  Darwin UFS      f1  SpeedStor      
-12  Compaq diagnost 5c  Priam Edisk     a9  NetBSD          f4  SpeedStor      
-14  Hidden FAT16 <3 61  SpeedStor       ab  Darwin boot     f2  DOS secondary  
-16  Hidden FAT16    63  GNU HURD or Sys af  HFS / HFS+      fb  VMware VMFS    
-17  Hidden HPFS/NTF 64  Novell Netware  b7  BSDI fs         fc  VMware VMKCORE 
-18  AST SmartSleep  65  Novell Netware  b8  BSDI swap       fd  Linux raid auto
-1b  Hidden W95 FAT3 70  DiskSecure Mult bb  Boot Wizard hid fe  LANstep        
-1c  Hidden W95 FAT3 75  PC/IX           be  Solaris boot    ff  BBT            
-1e  Hidden W95 FAT1 80  Old Minix      
 Hex code (type L to list codes): 8e
-Changed system type of partition 1 to 8e (Linux LVM)
 
 Command (m for help): p
 
-Disk /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e: 8589 MB, 8589934592 bytes
-255 heads, 63 sectors/track, 1044 cylinders, total 16777216 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xe3198e3d
+Command (m for help): w
 
-                                                Device Boot      Start         End      Blocks   Id  System
 /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e-part1   *        2048    16777215     8387584   8e  Linux LVM
 
-Command (m for help): w
-The partition table has been altered!
-
-Calling ioctl() to re-read partition table.
-
-WARNING: Re-reading the partition table failed with error 13: Permission denied.
-The kernel still uses the old table. The new table will be used at
-the next reboot or after you run partprobe(8) or kpartx(8)
-Syncing disks.
-[40m[33mMicroknoppix[1;33m[03:36:27][1;34m(1)[1;36m~[31m$[0m [Ksudo !!
-sudo fdisk /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e 
-
-Command (m for help): p
-
-Disk /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e: 8589 MB, 8589934592 bytes
-86 heads, 1 sectors/track, 195083 cylinders, total 16777216 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xe3198e3d
-
-                                                Device Boot      Start         End      Blocks   Id  System
-/dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120ead-62557b9e-part1   *        2048    16777215     8387584   8e  Linux LVM
-
-Command (m for help): w
-The partition table has been altered!
-
-Calling ioctl() to re-read partition table.
-Syncing disks.
-[40m[33mMicroknoppix[1;33m[03:36:53][1;34m(0)[1;36m~[31m$[0m sudo fdisk /dev/disk/by-id/ata-VBOX_HARDDISK_VBa6120eead-62557b9e M[40m[33mMicroknoppix[1;33m[03:36:53][1;34m(0)[1;36m~[31m$[0m [K
-[KM[40m[33mMicroknoppix[1;33m[03:36:53][1;34m(0)[1;36m~[31m$[0m fdisk -l
+fdisk -l
 
 Disk /dev/sda: 8589 MB, 8589934592 bytes
 86 heads, 1 sectors/track, 195083 cylinders, total 16777216 sectors
@@ -152,299 +72,30 @@ Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk identifier: 0xe3198e3d
-
    Device Boot      Start         End      Blocks   Id  System
 /dev/sda1   *        2048    16777215     8387584   8e  Linux LVM
-[40m[33mMicroknoppix[1;33m[03:37:04][1;34m(0)[1;36m~[31m$[0m lv
-lvchange     lvdisplay    lvmchange    lvmdump      lvreduce     lvresize
-lvconvert    lvextend     lvmconf      lvmsadc      lvremove     lvs
-lvcreate     lvm          lvmdiskscan  lvmsar       lvrename     lvscan
-[40m[33mMicroknoppix[1;33m[03:37:04][1;34m(0)[1;36m~[31m$[0m lvc
-lvchange   lvconvert  lvcreate   
-[40m[33mMicroknoppix[1;33m[03:37:04][1;34m(0)[1;36m~[31m$[0m lvcreate 
-  /dev/mapper/control: open failed: Permission denied
-  Failure to communicate with kernel device-mapper driver.
-  WARNING: Running as a non-root user. Functionality may be unavailable.
-  /run/lock/lvm: mkdir failed: Permission denied
-  File-based locking initialisation failed.
-[40m[33mMicroknoppix[1;33m[03:44:01][1;34m(5)[1;36m~[31m$[0m sudo !!
-sudo lvcreate 
-  Please provide a volume group name
-  Run `lvcreate --help' for more information.
-[40m[33mMicroknoppix[1;33m[03:44:11][1;34m(3)[1;36m~[31m$[0m sudo lvcreate --help
-  lvcreate: Create a logical volume
 
-lvcreate 
-	[-A|--autobackup {y|n}]
-	[-a|--available [e|l]y|n]
-	[--addtag Tag]
-	[--alloc AllocationPolicy]
-	[-C|--contiguous {y|n}]
-	[-d|--debug]
-	[-h|-?|--help]
-	[--ignoremonitoring]
-	[--monitor {y|n}]
-	[-i|--stripes Stripes [-I|--stripesize StripeSize]]
-	{-l|--extents LogicalExtentsNumber[%{VG|PVS|FREE}] |
-	 -L|--size LogicalVolumeSize[bBsSkKmMgGtTpPeE]}
-	[-M|--persistent {y|n}] [--major major] [--minor minor]
-	[-m|--mirrors Mirrors [--nosync] [{--mirrorlog {disk|core|mirrored}|--corelog}]]
-	[-n|--name LogicalVolumeName]
-	[--noudevsync]
-	[-p|--permission {r|rw}]
-	[-r|--readahead ReadAheadSectors|auto|none]
-	[-R|--regionsize MirrorLogRegionSize]
-	[-t|--test]
-	[--type VolumeType]
-	[-v|--verbose]
-	[-Z|--zero {y|n}]
-	[--version]
-	VolumeGroupName [PhysicalVolumePath...]
+sudo pvcreate /dev/sda1
 
-lvcreate 
-	{ {-s|--snapshot} OriginalLogicalVolume[Path] |
-	  [-s|--snapshot] VolumeGroupName[Path] -V|--virtualsize VirtualSize}
-	  {-T|--thin} VolumeGroupName[Path][/PoolLogicalVolume] 
-	              -V|--virtualsize VirtualSize}
-	[-c|--chunksize]
-	[-A|--autobackup {y|n}]
-	[--addtag Tag]
-	[--alloc AllocationPolicy]
-	[-C|--contiguous {y|n}]
-	[-d|--debug]
-	[-h|-?|--help]
-	[--ignoremonitoring]
-	[--monitor {y|n}]
-	[-i|--stripes Stripes [-I|--stripesize StripeSize]]
-	{-l|--extents LogicalExtentsNumber[%{VG|FREE|ORIGIN}] |
-	 -L|--size LogicalVolumeSize[bBsSkKmMgGtTpPeE]}
-	[--poolmetadatasize Size[bBsSkKmMgG]]
-	[-M|--persistent {y|n}] [--major major] [--minor minor]
-	[-n|--name LogicalVolumeName]
-	[--noudevsync]
-	[-p|--permission {r|rw}]
-	[-r|--readahead ReadAheadSectors|auto|none]
-	[-t|--test]
-	[--thinpool] PoolLogicalVolume
-	[-v|--verbose]
-	[--version]
-	[PhysicalVolumePath...]
-
-
-[40m[33mMicroknoppix[1;33m[03:46:13][1;34m(0)[1;36m~[31m$[0m sudo lvcreate --help[K-n Jasix   xLV JasixVG
-  Please specify either size or extents
-  Run `lvcreate --help' for more information.
-[40m[33mMicroknoppix[1;33m[03:54:31][1;34m(3)[1;36m~[31m$[0m sudo lvcreate -n JasixLV JasixVG[1@-[1@L[1@ [1@1[1@0[1@0[1@M[1@ 
-  Volume group "JasixVG" not found
-[40m[33mMicroknoppix[1;33m[03:58:20][1;34m(5)[1;36m~[31m$[0m sudo vgcreate 
-  Please provide volume group name and physical volumes
-  Run `vgcreate --help' for more information.
-[40m[33mMicroknoppix[1;33m[03:58:32][1;34m(3)[1;36m~[31m$[0m sudo pr vc
-pvchange  pvck      pvcreate  
-[40m[33mMicroknoppix[1;33m[03:58:32][1;34m(3)[1;36m~[31m$[0m sudo pvcreate 
-  Please enter a physical volume path
-  Run `pvcreate --help' for more information.
-[40m[33mMicroknoppix[1;33m[03:58:46][1;34m(3)[1;36m~[31m$[0m sudo pvcreate --help
-  pvcreate: Initialize physical volume(s) for use by LVM
-
-pvcreate 
-	[--norestorefile]
-	[--restorefile file]
-	[-d|--debug]
-	[-f[f]|--force [--force]] 
-	[-h|-?|--help] 
-	[--labelsector sector] 
-	[-M|--metadatatype 1|2]
-	[--pvmetadatacopies #copies]
-	[--metadatasize MetadataSize[bBsSkKmMgGtTpPeE]]
-	[--dataalignment Alignment[bBsSkKmMgGtTpPeE]]
-	[--dataalignmentoffset AlignmentOffset[bBsSkKmMgGtTpPeE]]
-	[--setphysicalvolumesize PhysicalVolumeSize[bBsSkKmMgGtTpPeE]
-	[-t|--test] 
-	[-u|--uuid uuid] 
-	[-v|--verbose] 
-	[-y|--yes]
-	[-Z|--zero {y|n}]
-	[--version] 
-	PhysicalVolume [PhysicalVolume...]
-
-[40m[33mMicroknoppix[1;33m[04:00:02][1;34m(0)[1;36m~[31m$[0m sudo pvcreate --help[K/dev/sda
-  Device /dev/sda not found (or ignored by filtering).
-[40m[33mMicroknoppix[1;33m[04:02:10][1;34m(5)[1;36m~[31m$[0m fdisk -l
-
-Disk /dev/sda: 8589 MB, 8589934592 bytes
-86 heads, 1 sectors/track, 195083 cylinders, total 16777216 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xe3198e3d
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sda1   *        2048    16777215     8387584   8e  Linux LVM
-[40m[33mMicroknoppix[1;33m[04:02:26][1;34m(0)[1;36m~[31m$[0m fdisk -lsudo pvcreate /dev/sda1
   Writing physical volume data to disk "/dev/sda1"
   Physical volume "/dev/sda1" successfully created
-[40m[33mMicroknoppix[1;33m[04:02:32][1;34m(0)[1;36m~[31m$[0m sudo pvcreate /dev/sda1[15Pfdisk -lsudo pvcreate /dev/sda[2P--help[Kvgcreate 
-  Please provide volume group name and physical volumes
-  Run `vgcreate --help' for more information.
-[40m[33mMicroknoppix[1;33m[04:02:45][1;34m(3)[1;36m~[31m$[0m sudo vgcreate --help
-  vgcreate: Create a volume group
 
-vgcreate
-	[-A|--autobackup {y|n}] 
-	[--addtag Tag] 
-	[--alloc AllocationPolicy] 
-	[-c|--clustered {y|n}] 
-	[-d|--debug]
-	[-h|--help]
-	[-l|--maxlogicalvolumes MaxLogicalVolumes]
-	[-M|--metadatatype 1|2] 
-	[--[vg]metadatacopies #copies] 
-	[-p|--maxphysicalvolumes MaxPhysicalVolumes] 
-	[-s|--physicalextentsize PhysicalExtentSize[bBsSkKmMgGtTpPeE]] 
-	[-t|--test] 
-	[-v|--verbose]
-	[--version] 
-	[ PHYSICAL DEVICE OPTIONS ] 
-	VolumeGroupName PhysicalDevicePath [PhysicalDevicePath...]
+sudo vgcreate JasixVG /dev/sda1
 
-[40m[33mMicroknoppix[1;33m[04:03:03][1;34m(0)[1;36m~[31m$[0m sudo vgcreate --help[KJasixVG /dev/sda1
   Volume group "JasixVG" successfully created
-[40m[33mMicroknoppix[1;33m[04:06:03][1;34m(0)[1;36m~[31m$[0m sudo vgcreate JasixVG /dev/sda1[11P--help[Kpvcreate /dev/sda1[15Pfdisk -lsudo pvcreate /dev/sda[2P--help[Kvgcreate lvcreate -n JasixLV -L 100M JasixVG[1P[1P[1P[1P[1P[1P[1P[1P[1@b[1P[1@B[1@o[1@o[1@t[1@ 
+
+sudo lvcreate -n Boot -L 100M JasixVG
+
   Logical volume "Boot" created
-[40m[33mMicroknoppix[1;33m[04:07:58][1;34m(0)[1;36m~[31m$[0m sudo lvcreate -n Boot -L 100M JasixVG[1P[1P[1P[1@G[1P[1@R
+
+sudo lvcreate -n Root -L 1G JasixVG
+
   Logical volume "Root" created
-[40m[33mMicroknoppix[1;33m[04:08:13][1;34m(0)[1;36m~[31m$[0m ls /m
-media/      mnt/        mnt-system/ mnt-user/   modules/    
-[40m[33mMicroknoppix[1;33m[04:08:13][1;34m(0)[1;36m~[31m$[0m ls /mn
-mnt/        mnt-system/ mnt-user/   
-[40m[33mMicroknoppix[1;33m[04:08:13][1;34m(0)[1;36m~[31m$[0m ls /mnt
-[40m[33mMicroknoppix[1;33m[04:11:39][1;34m(0)[1;36m~[31m$[0m mount /grep             ls /media/
-sda/  sda1/ sr0/  
-[40m[33mMicroknoppix[1;33m[04:11:39][1;34m(0)[1;36m~[31m$[0m ls /media/sd
-sda/  sda1/ 
-[40m[33mMicroknoppix[1;33m[04:11:39][1;34m(0)[1;36m~[31m$[0m ls /media/sda1
-[40m[33mMicroknoppix[1;33m[04:12:22][1;34m(0)[1;36m~[31m$[0m mount / g |grep mnt
-/dev/sr0 on /[01;31m[Kmnt[m[K-system type iso9660 (ro,relatime)
-[40m[33mMicroknoppix[1;33m[04:12:59][1;34m(0)[1;36m~[31m$[0m mkdir /mnt/jasix
-mkdir: cannot create directory `/mnt/jasix': Permission denied
-[40m[33mMicroknoppix[1;33m[04:13:54][1;34m(1)[1;36m~[31m$[0m sudo !!
+
 sudo mkdir /mnt/jasix
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mke
-mke2fs     mkexfatfs  
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mke fs
-mkfs           mkfs.exfat     mkfs.ext4      mkfs.msdos     mkfs.vfat
-mkfs.bfs       mkfs.ext2      mkfs.ext4dev   mkfs.ntfs      mkfs.xfs
-mkfs.cramfs    mkfs.ext3      mkfs.minix     mkfs.reiserfs  
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mkfs.
-mkfs.bfs       mkfs.ext2      mkfs.ext4dev   mkfs.ntfs      mkfs.xfs
-mkfs.cramfs    mkfs.ext3      mkfs.minix     mkfs.reiserfs  
-mkfs.exfat     mkfs.ext4      mkfs.msdos     mkfs.vfat      
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mkfs.e
-mkfs.exfat    mkfs.ext2     mkfs.ext3     mkfs.ext4     mkfs.ext4dev
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mkfs.ext4
-mkfs.ext4     mkfs.ext4dev  
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mkfs.ext4 /dev/mapper/
-JasixVG-Boot  JasixVG-Root  control       
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mkfs.ext4 /dev/mapper/J
-JasixVG-Boot  JasixVG-Root  
-[40m[33mMicroknoppix[1;33m[04:13:58][1;34m(0)[1;36m~[31m$[0m sudo mkfs.ext4 /dev/mapper/JasixVG-Boot 
-mke2fs 1.42.5 (29-Jul-2012)
-Filesystem label=
-OS type: Linux
-Block size=1024 (log=0)
-Fragment size=1024 (log=0)
-Stride=0 blocks, Stripe width=0 blocks
-25688 inodes, 102400 blocks
-5120 blocks (5.00%) reserved for the super user
-First data block=1
-Maximum filesystem blocks=67371008
-13 block groups
-8192 blocks per group, 8192 fragments per group
-1976 inodes per group
-Superblock backups stored on blocks: 
-	8193, 24577, 40961, 57345, 73729
-
-Allocating group tables:  0/13 1/13 2/13 3/13 4/13 5/13 6/13 7/13 8/13 9/1310/1311/1312/13     done                            
-Writing inode tables:  0/13 1/13 2/13 3/13 4/13 5/13 6/13 7/13 8/13 9/1310/1311/1312/13     done                            
-Creating journal (4096 blocks): done
-Writing superblocks and filesystem accounting information:  0/13 1/13 2/13 3/13 4/13 5/13 6/13 7/13 8/13 9/1310/1311/1312/13     done
-
-[40m[33mMicroknoppix[1;33m[04:20:42][1;34m(0)[1;36m~[31m$[0m ^B^R
-sudo mkfs.ext4 /dev/mapper/JasixVG-Root 
-mke2fs 1.42.5 (29-Jul-2012)
-Filesystem label=
-OS type: Linux
-Block size=4096 (log=2)
-Fragment size=4096 (log=2)
-Stride=0 blocks, Stripe width=0 blocks
-65536 inodes, 262144 blocks
-13107 blocks (5.00%) reserved for the super user
-First data block=0
-Maximum filesystem blocks=268435456
-8 block groups
-32768 blocks per group, 32768 fragments per group
-8192 inodes per group
-Superblock backups stored on blocks: 
-	32768, 98304, 163840, 229376
-
-Allocating group tables: 0/81/82/83/84/85/86/87/8   done                            
-Writing inode tables: 0/81/82/83/84/85/86/87/8   done                            
-Creating journal (8192 blocks): done
-Writing superblocks and filesystem accounting information: 0/81/82/83/84/85/86/87/8   done
-
-[40m[33mMicroknoppix[1;33m[04:20:46][1;34m(0)[1;36m~[31m$[0m mount !$ /mn
-mnt/        mnt-system/ mnt-user/   
-[40m[33mMicroknoppix[1;33m[04:20:46][1;34m(0)[1;36m~[31m$[0m mount !$ /mnt/J jasix/ 
-mount /dev/mapper/JasixVG-Root /mnt/jasix
-mount: only root can do that
-[40m[33mMicroknoppix[1;33m[04:21:14][1;34m(1)[1;36m~[31m$[0m sudo !!
+sudo mkfs.ext4 -L Boot /dev/mapper/JasixVG-Boot
+sudo mkfs.ext4 -L Root /dev/mapper/JasixVG-Root
 sudo mount /dev/mapper/JasixVG-Root /mnt/jasix
-[40m[33mMicroknoppix[1;33m[04:21:16][1;34m(0)[1;36m~[31m$[0m cd !$
 cd /mnt/jasix
-[40m[33mMicroknoppix[1;33m[04:21:21][1;34m(0)[1;36m/mnt/jasix[31m$[0m ll
-total 20
-drwxr-xr-x 3 root root  4096 Dec 26 04:20 [0m[01;34m.[0m
-drwxr-xr-x 3 root root     0 Dec 26 04:13 [01;34m..[0m
-drwx------ 2 root root 16384 Dec 26 04:20 [01;34mlost+found[0m
-[40m[33mMicroknoppix[1;33m[04:21:35][1;34m(0)[1;36m/mnt/jasix[31m$[0m mkdir boot dev proc sys
-mkdir: cannot create directory `boot': Permission denied
-mkdir: cannot create directory `dev': Permission denied
-mkdir: cannot create directory `proc': Permission denied
-mkdir: cannot create directory `sys': Permission denied
-[40m[33mMicroknoppix[1;33m[04:22:11][1;34m(1)[1;36m/mnt/jasix[31m$[0m ls /
-[0m[01;34mKNOPPIX[0m  [01;36mboot[0m  [01;34mhome[0m  [01;34mmedia[0m       [01;34mmnt-user[0m  [01;34mproc[0m     [01;34mrun[0m   [30;42mtmp[0m
-[01;34mUNIONFS[0m  [30;42mdev[0m   [01;32minit[0m  [01;34mmnt[0m         [01;34mmodules[0m   [01;34mramdisk[0m  [01;36msbin[0m  [01;34musr[0m
-[01;36mbin[0m      [01;36metc[0m   [01;36mlib[0m   [01;34mmnt-system[0m  [01;36mopt[0m       [01;36mroot[0m     [01;34msys[0m   [01;36mvar[0m
-[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m ls /mkdir boot dev proc sys usr var bin sbin mn t etcM[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m mkdir boot dev proc sys usr var bin sbin msmkdir boot dev proc sys usr var bin sbin mn[1@tM[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m sumkdir boot dev proc sys usr var bin sbin m[1@nM[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m sudmkdir boot dev proc sys usr var bin sbin [1@mM[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m sudomkdir boot dev proc sys usr var bin sbin[1@ M[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m sudo mkdir boot dev proc sys usr var bin sbi[1@nM[40m[33mMicroknoppix[1;33m[04:22:14][1;34m(0)[1;36m/mnt/jasix[31m$[0m sudo 
-
-[40m[33mMicroknoppix[1;33m[04:23:07][1;34m(0)[1;36m/mnt/jasix[31m$[0m [Kls
-[0m[01;34mbin[0m  [01;34mboot[0m  [01;34mdev[0m  [01;34metc[0m  [01;34mlost+found[0m  [01;34mmnt[0m  [01;34mproc[0m  [01;34msbin[0m  [01;34msys[0m  [01;34musr[0m  [01;34mvar[0m
-[40m[33mMicroknoppix[1;33m[04:23:10][1;34m(0)[1;36m/mnt/jasix[31m$[0m mo  sudo mount /dev/JasixVG/b Boot b
-bin/  boot/ 
-[40m[33mMicroknoppix[1;33m[04:23:10][1;34m(0)[1;36m/mnt/jasix[31m$[0m sudo mount /dev/JasixVG/Boot boot/
-[40m[33mMicroknoppix[1;33m[04:23:42][1;34m(0)[1;36m/mnt/jasix[31m$[0m mount
-rootfs on / type rootfs (rw,relatime)
-proc on /proc type proc (rw,relatime)
-sysfs on /sys type sysfs (rw,relatime)
-/dev/sr0 on /mnt-system type iso9660 (ro,relatime)
-tmpfs on /ramdisk type tmpfs (rw,relatime,size=2097152k,mode=755)
-/dev/cloop on /KNOPPIX type iso9660 (ro,relatime)
-unionfs on /UNIONFS type aufs (rw,relatime,si=bb6b54ff,noplink)
-unionfs on /usr type aufs (rw,relatime,si=bb6b54ff,noplink)
-unionfs on /home type aufs (rw,relatime,si=bb6b54ff,noplink)
-tmpfs on /run type tmpfs (rw,relatime,size=20480k)
-tmpfs on /UNIONFS/var/run type tmpfs (rw,relatime,size=20480k)
-tmpfs on /UNIONFS/var/lock type tmpfs (rw,relatime,size=10240k)
-tmpfs on /UNIONFS/var/log type tmpfs (rw,relatime,size=102400k)
-tmpfs on /tmp type tmpfs (rw,relatime,size=2097152k)
-udev on /dev type tmpfs (rw,relatime,size=20480k)
-tmpfs on /dev/shm type tmpfs (rw,relatime,size=2097152k)
-devpts on /dev/pts type devpts (rw,relatime,mode=1777)
-gvfs-fuse-daemon on /home/knoppix/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
-/dev/mapper/JasixVG-Root on /mnt/jasix type ext4 (rw,relatime,data=ordered)
-/dev/mapper/JasixVG-Boot on /mnt/jasix/boot type ext4 (rw,relatime,data=ordered)
-[40m[33mMicroknoppix[1;33m[04:23:45][1;34m(0)[1;36m/mnt/jasix[31m$[0m exit
-exit
-
-Script done on Thu Dec 26 04:24:13 2013
+sudo mkdir boot dev proc sys usr var bin sbin
+sudo mount /dev/JasixVG/Boot boot/
