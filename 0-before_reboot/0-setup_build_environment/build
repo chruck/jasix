@@ -1,0 +1,24 @@
+#!/bin/sh -x
+
+set -e
+
+# Script to automate the build of jasix
+
+# Create build environment by installing programs needed to build
+
+PROGRAMS=
+
+for i in *
+do
+    if [[ $(basename $0) != ${i} ]]
+    then
+        PROGRAMS="${PROGRAMS} ${i}"
+    fi
+done
+
+sudo yum -y install ${PROGRAMS}
+
+if [[ 0 == $? ]]
+then
+    touch .completed
+fi

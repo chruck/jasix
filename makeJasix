@@ -1,0 +1,21 @@
+#!/bin/sh -x
+
+set -e
+
+# Script to automate the build of Jasix
+
+echo Building Jasix
+
+subdirs="0-before_reboot 1-after_reboot"
+
+for i in ${subdirs}
+do
+    if [[ ! -e ${i}/.completed ]]
+    then
+        pushd ${i}
+        ./build
+        popd
+    fi
+done
+
+echo Finished building Jasix
