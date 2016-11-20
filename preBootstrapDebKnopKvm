@@ -1,0 +1,181 @@
+#!/bin/bash
+
+##
+# @file preBootstrapDebKnopKvm
+# @author Jas Eckard <jas+jasix@eckard.com>
+#
+# @section LICENSE
+#
+# GPLv3
+#
+# @section DESCRIPTION
+#
+# This file is used to download Knoppix, then boot a KVM image into
+# Knoppix
+
+# Return codes:  1 = bad parameter(s)
+#                2 = required parameter missing
+
+readonly localDir="$(cd ${BASH_SOURCE[0]%/*} && pwd -P && cd - >/dev/null)"
+
+# To get some debug output call this file like:
+# DEBUG=true ./preBootstrapDebKnopKvm.sh ...
+
+echoStderr() { echo "$@" 1>&2; }
+
+if [[ 'x' == "x${DEBUG}" ]]; then
+        # Make `debug' a no-op
+        debug() { :; }
+else
+        debug() {
+                echoStderr -n "DEBUG ${BASH_LINENO[*]}:  "
+                echoStderr "$@"
+        }
+fi
+
+# Usages:
+#echo “regular stdout output”
+#echoStderr “regular stderr output”
+#debug “stderr output only seen when DEBUG set”
+
+declare rc=0
+declare optionA=0
+declare optionB=bogus
+#declare REQUIRED
+declare OPTIONAL=bogus
+readonly pi="3.1415"
+
+. ansicolors 
+
+Usage()
+{
+        cat 1>&2 <<EOFUsage
+
+Usage:  $0 [OPTION]... REQUIRED [OPTIONAL]
+
+  -a, --optionA         Description
+  -b, --optionB VAL     Desc that takes VAL
+  -h, -?, --help        Display this help and exit
+
+EOFUsage
+        exit ${rc}
+}  # Usage()
+
+parseOptions()
+{
+        debug "Original args:  $@"
+
+        local shortopts="h?" ; local longopts="help,"
+        shortopts+="a"; longopts+="optionA,"
+        shortopts+="b:"; longopts+="optionB:,"
+
+        debug "shortopts=${shortopts} longopts=${longopts}"
+
+        ARGS=$(getopt -o "${shortopts}" -l "${longopts}" -n "getopt.sh" -- "$@")
+
+        getoptRc=$?
+        if [[ 0 -ne "${getoptRc}" ]]; then
+                echoStderr "ERROR:  getopt called incorrectly, rc=${getoptRc}"
+                rc=1
+                exit ${rc}
+                # Alternatively, ($rc gets passed):
+                #Usage
+        fi
+
+        eval set -- "${ARGS}"
+
+        while true; do
+                param=$1
+                case "${param}" in
+                        -a|--optionA)
+                                debug "-a used"
+                                optionA=1
+                                shift
+                                ;;
+                        -b|--optionB)
+                                shift
+                                if [[ -n "$1" ]]; then
+                                        debug "-b used: $1";
+                                        optionB=$1
+                                        shift;
+                                fi
+                                ;;
+                        -h|-\?|--help)
+                                debug "Asked for help"
+                                Usage
+                                ;;
+                        --)
+                                shift;
+                                break;
+                                ;;
+                        *)
+                                echoStderr "ERROR:  Unimplemented option: ${param}"
+                                break;
+                                ;;
+                esac
+        done
+
+        debug "New args:  $@"
+
+        # For 1 required and one optional argument
+#        if [[ 1 != ${#@} && 2 != ${#@} ]]; then
+#                rc=2
+#                echoStderr "ERROR:  REQUIRED required."
+#        fi
+
+        REQUIRED=$1
+        OPTIONAL=$2
+
+#        if [[ 'bogus' == "${optionB}" ]]; then
+#                rc=2
+#                echoStderr "ERROR:  --optionB field required."
+#        fi
+
+        if [[ 0 != ${rc} ]]; then
+                Usage
+        fi
+}  # parseOptions()
+
+# TODO:  Verify the parameters passed are valid
+verifyParams()
+{
+        :
+#       if [[ "${optionB}" =~ /reg[ex]/ ]]; then
+#               echoStderr "ERROR:  --optionB should be of the form: reg[ex]"
+#               rc=2
+#       fi
+}  # verifyParams()
+
+#        while read line; do
+#                echoStderr "WARNING:  I do not like ${line}"
+#        done < <(grep "^${softwarebom}" ${steutabFName})
+
+banner()
+{
+        echo -e "${BOLDWHITE} --- ${BOLDYELLOW} Jasix ${BOLDWHITE} --- ${RESET}"
+        echo -e "${BOLDWHITE} Linux distribution scripted and customized by me, Jas ${RESET}"
+        echo
+}
+
+dlKnoppix()
+{
+        echo -e "${GREEN} Downloading Knoppix image: ${RESET}"
+# wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+        wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
+        sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
+}
+
+startKvm()
+{
+        echo -e "${GREEN} Starting KVM: ${RESET}"
+        dd if=/dev/zero of=jasix.hda bs=1G count=1
+        echo -e "${BOLDRED} Once the VM is booted execute: ${RESET}"
+        echo -e "${BOLDWHITE} ${RESET}"
+        kvm -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
+}
+
+parseOptions "$@"
+verifyParams
+banner
+dlKnoppix
+startKvm
