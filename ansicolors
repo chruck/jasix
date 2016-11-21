@@ -37,3 +37,163 @@ UNDERLINEMAGENTA="\\033[4;35m"
 UNDERLINERED="\\033[4;31m"
 UNDERLINEWHITE="\\033[4;37m"
 UNDERLINEYELLOW="\\033[4;33m"
+
+black()
+{
+        echo -e "${BLACK}${@}${RESET}"
+}
+
+blue()
+{
+        echo -e "${BLUE}${@}${RESET}"
+}
+
+cyan()
+{
+        echo -e "${CYAN}${@}${RESET}"
+}
+
+green()
+{
+        echo -e "${GREEN}${@}${RESET}"
+}
+
+magenta()
+{
+        echo -e "${MAGENTA}${@}${RESET}"
+}
+
+red()
+{
+        echo -e "${RED}${@}${RESET}"
+}
+
+white()
+{
+        echo -e "${WHITE}${@}${RESET}"
+}
+
+yellow()
+{
+        echo -e "${YELLOW}${@}${RESET}"
+}
+
+boldblack()
+{
+        echo -e "${BOLDBLACK}${@}${RESET}"
+}
+
+boldblue()
+{
+        echo -e "${BOLDBLUE}${@}${RESET}"
+}
+
+boldcyan()
+{
+        echo -e "${BOLDCYAN}${@}${RESET}"
+}
+
+boldgreen()
+{
+        echo -e "${BOLDGREEN}${@}${RESET}"
+}
+
+boldmagenta()
+{
+        echo -e "${BOLDMAGENTA}${@}${RESET}"
+}
+
+boldred()
+{
+        echo -e "${BOLDRED}${@}${RESET}"
+}
+
+boldwhite()
+{
+        echo -e "${BOLDWHITE}${@}${RESET}"
+}
+
+boldyellow()
+{
+        echo -e "${BOLDYELLOW}${@}${RESET}"
+}
+
+reverseblack()
+{
+        echo -e "${REVERSEBLACK}${@}${RESET}"
+}
+
+reverseblue()
+{
+        echo -e "${REVERSEBLUE}${@}${RESET}"
+}
+
+reversecyan()
+{
+        echo -e "${REVERSECYAN}${@}${RESET}"
+}
+
+reversegreen()
+{
+        echo -e "${REVERSEGREEN}${@}${RESET}"
+}
+
+reversemagenta()
+{
+        echo -e "${REVERSEMAGENTA}${@}${RESET}"
+}
+
+reversered()
+{
+        echo -e "${REVERSERED}${@}${RESET}"
+}
+
+reversewhite()
+{
+        echo -e "${REVERSEWHITE}${@}${RESET}"
+}
+
+reverseyellow()
+{
+        echo -e "${REVERSEYELLOW}${@}${RESET}"
+}
+
+underlineblack()
+{
+        echo -e "${UNDERLINEBLACK}${@}${RESET}"
+}
+
+underlineblue()
+{
+        echo -e "${UNDERLINEBLUE}${@}${RESET}"
+}
+
+underlinecyan()
+{
+        echo -e "${UNDERLINECYAN}${@}${RESET}"
+}
+
+underlinegreen()
+{
+        echo -e "${UNDERLINEGREEN}${@}${RESET}"
+}
+
+underlinemagenta()
+{
+        echo -e "${UNDERLINEMAGENTA}${@}${RESET}"
+}
+
+underlinered()
+{
+        echo -e "${UNDERLINERED}${@}${RESET}"
+}
+
+underlinewhite()
+{
+        echo -e "${UNDERLINEWHITE}${@}${RESET}"
+}
+
+underlineyellow()
+{
+        echo -e "${UNDERLINEYELLOW}${@}${RESET}"
+}
