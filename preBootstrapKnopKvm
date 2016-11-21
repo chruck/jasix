@@ -152,14 +152,14 @@ verifyParams()
 
 banner()
 {
-        echo -e "${BOLDWHITE} --- ${BOLDYELLOW} Jasix ${BOLDWHITE} --- ${RESET}"
-        echo -e "${BOLDWHITE} Linux distribution scripted and customized by me, Jas ${RESET}"
+        boldwhite "--- ${BOLDYELLOW} Jasix ${BOLDWHITE} ---"
+        boldwhite "Linux distribution scripted and customized by me, Jas"
         echo
 }
 
 dlKnoppix()
 {
-        echo -e "${GREEN} Downloading Knoppix image: ${RESET}"
+        green "Downloading Knoppix image:"
 # wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
         wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
         sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
@@ -167,10 +167,10 @@ dlKnoppix()
 
 startKvm()
 {
-        echo -e "${GREEN} Starting KVM: ${RESET}"
+        green "Starting KVM:"
         dd if=/dev/zero of=jasix.hda bs=1G count=1
-        echo -e "${BOLDRED} Once the VM is booted execute: ${RESET}"
-        echo -e "${BOLDWHITE} ${RESET}"
+        boldred "Once the VM is booted execute:"
+        boldwhite
         kvm -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
 }
 
