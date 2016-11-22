@@ -33,17 +33,7 @@ else
         }
 fi
 
-# Usages:
-#echo “regular stdout output”
-#echoStderr “regular stderr output”
-#debug “stderr output only seen when DEBUG set”
-
 declare rc=0
-declare optionA=0
-declare optionB=bogus
-#declare REQUIRED
-declare OPTIONAL=bogus
-readonly pi="3.1415"
 
 . ansicolors 
 
@@ -53,8 +43,6 @@ Usage()
 
 Usage:  $0 [OPTION]... REQUIRED [OPTIONAL]
 
-  -a, --optionA         Description
-  -b, --optionB VAL     Desc that takes VAL
   -h, -?, --help        Display this help and exit
 
 EOFUsage
@@ -66,8 +54,6 @@ parseOptions()
         debug "Original args:  $@"
 
         local shortopts="h?" ; local longopts="help,"
-        shortopts+="a"; longopts+="optionA,"
-        shortopts+="b:"; longopts+="optionB:,"
 
         debug "shortopts=${shortopts} longopts=${longopts}"
 
@@ -87,19 +73,6 @@ parseOptions()
         while true; do
                 param=$1
                 case "${param}" in
-                        -a|--optionA)
-                                debug "-a used"
-                                optionA=1
-                                shift
-                                ;;
-                        -b|--optionB)
-                                shift
-                                if [[ -n "$1" ]]; then
-                                        debug "-b used: $1";
-                                        optionB=$1
-                                        shift;
-                                fi
-                                ;;
                         -h|-\?|--help)
                                 debug "Asked for help"
                                 Usage
@@ -117,20 +90,6 @@ parseOptions()
 
         debug "New args:  $@"
 
-        # For 1 required and one optional argument
-#        if [[ 1 != ${#@} && 2 != ${#@} ]]; then
-#                rc=2
-#                echoStderr "ERROR:  REQUIRED required."
-#        fi
-
-        REQUIRED=$1
-        OPTIONAL=$2
-
-#        if [[ 'bogus' == "${optionB}" ]]; then
-#                rc=2
-#                echoStderr "ERROR:  --optionB field required."
-#        fi
-
         if [[ 0 != ${rc} ]]; then
                 Usage
         fi
@@ -140,15 +99,7 @@ parseOptions()
 verifyParams()
 {
         :
-#       if [[ "${optionB}" =~ /reg[ex]/ ]]; then
-#               echoStderr "ERROR:  --optionB should be of the form: reg[ex]"
-#               rc=2
-#       fi
 }  # verifyParams()
-
-#        while read line; do
-#                echoStderr "WARNING:  I do not like ${line}"
-#        done < <(grep "^${softwarebom}" ${steutabFName})
 
 banner()
 {
@@ -159,10 +110,19 @@ banner()
 
 dlKnoppix()
 {
-        green "Downloading Knoppix image:"
-# wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+        green "Downloading Knoppix image if necessary:"
         wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
-        sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
+
+        if [[ -f KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso ]]; then
+                yellow "Knoppix DVD iso found."
+                if ! sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
+                then
+                        red "but checksum fails, re-downloading"
+                        green "Downloading Knoppix image:"
+                        rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+                        wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+                fi
+        fi
 }
 
 startKvm()
@@ -171,7 +131,7 @@ startKvm()
         dd if=/dev/zero of=jasix.hda bs=1G count=1
         boldred "Once the VM is booted execute:"
         boldwhite
-        kvm -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
+        kvm -smp 2 -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
 }
 
 parseOptions "$@"
