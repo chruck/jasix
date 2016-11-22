@@ -130,7 +130,7 @@ startKvm()
         green "Starting KVM:"
         dd if=/dev/zero of=jasix.hda bs=1G count=1
         boldred "Once the VM is booted execute:"
-        boldwhite
+        boldwhite "wget -O - https://raw.githubusercontent.com/chruck/jasix/master/makeJasix | sh"
         kvm -smp 2 -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
 }
 
