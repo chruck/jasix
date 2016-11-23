@@ -1,6 +1,4 @@
-#!/bin/sh -x
-
-set -e
+#!/bin/bash
 
 # Script to automate the build of jasix
 
