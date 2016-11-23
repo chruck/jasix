@@ -1,10 +1,12 @@
-#!/bin/sh
+#!/bin/bash -x
 
 set -e
 
+. ansicolors
+
 # Script to automate the build of Jasix
 
-echo "\\033[1;32m=== Building Jasix ===\\033[0;0m"
+boldgreen "=== Building Jasix ==="
 
 git clone https://github.com/chruck/jasix.git
 
@@ -13,11 +15,11 @@ cd jasix
 subdirs="0-before_reboot 1-after_reboot"
 
 for i in ${subdirs}; do
-        if [ ! -e ${i}/.completed ]; then
-                cd ${i}
+        if [[ ! -e ${i}/.completed ]]; then
+                pushd ${i}
                 ./build
-                cd ..
+                popd
         fi
 done
 
-echo Finished building Jasix
+yellow "Finished building Jasix"
