@@ -1,29 +1,27 @@
-#!/bin/sh -x
+#!/bin/bash -x
 
 set -e
 
 # Script to build components needed before reboot
 
-echo Building 0-before_reboot
+. ../ansicolors
+
+boldgreen "Building 0-before_reboot"
 
 SUBDIRS=
 
-for i in *
-do
-    if [[ -d ${i} ]]
-    then
+for i in *; do
+    if [[ -d ${i} ]]; then
         SUBDIRS="${SUBDIRS} ${i}"
     fi
 done
 
-for i in ${subdirs}
-do
-    if [[ ! -e ${i}/.completed ]]
-    then
+for i in ${subdirs}; do
+    if [[ ! -e ${i}/.completed ]]; then
         pushd ${i}
         ./build
         popd
     fi
 done
 
-echo Finished building 0-before_reboot
+yellow "Finished building 0-before_reboot"
