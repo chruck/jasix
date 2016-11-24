@@ -1,23 +1,105 @@
 #!/bin/bash
 
-. ansicolors
-
+##
+# @file mkJasix
+# @author Jas Eckard <jas@eckard.com>
+#
+# @section LICENSE
+#
+# (GPL license?)
+#
+# @section DESCRIPTION
+#
 # Script to automate the build of Jasix
 
-boldgreen "=== Building Jasix ==="
+# Return codes:  1 = bad parameter(s)
+#                2 = required parameter missing
 
-git clone https://github.com/chruck/jasix.git
+. ansicolors
 
-cd jasix
+declare rc=0
 
-subdirs="0-before_reboot 1-after_reboot"
+Usage()
+{
+        cat 1>&2 <<EOFUsage
 
-for i in ${subdirs}; do
-        if [[ ! -e ${i}/.completed ]]; then
-                pushd ${i}
-                ./build
-                popd
+Usage:  $0 [OPTION]... REQUIRED [OPTIONAL]
+
+  -a, --optionA         Description
+  -b, --optionB VAL     Desc that takes VAL
+  -h, -?, --help        Display this help and exit
+
+EOFUsage
+        exit ${rc}
+}  # Usage()
+
+parseOptions()
+{
+        local shortopts="h?" ; local longopts="help,"
+        shortopts+="a"; longopts+="optionA,"
+        shortopts+="b:"; longopts+="optionB:,"
+
+        ARGS=$(getopt -o "${shortopts}" -l "${longopts}" -n "getopt.sh" -- "$@")
+
+        getoptRc=$?
+        if [[ 0 -ne "${getoptRc}" ]]; then
+                echoStderr "ERROR:  getopt called incorrectly, rc=${getoptRc}"
+                rc=1
+                exit ${rc}
+                # Alternatively, ($rc gets passed):
+                #Usage
         fi
-done
 
-yellow "Finished building Jasix"
+        eval set -- "${ARGS}"
+
+        if [[ 0 != ${rc} ]]; then
+                Usage
+        fi
+}  # parseOptions()
+
+verifyParams()
+{
+        :
+}  # verifyParams()
+
+introBanner()
+{
+        boldgreen "=== Building Jasix ==="
+}  # introBanner()
+
+gitLatest()
+{
+        if [[ -d jasix/.git ]]; then
+                pushd jasix
+                git pull
+        else
+                git clone https://github.com/chruck/jasix.git
+                pushd jasix
+        fi
+}  # gitLatest()
+
+buildEverything()
+{
+        subdirs="0-before_reboot 1-after_reboot"
+
+        for i in ${subdirs}; do
+                if [[ ! -e ${i}/.completed ]]; then
+                        pushd ${i}
+                        ./build
+                        popd
+                fi
+        done
+}   # buildEverything()
+
+endBanner()
+{
+        popd
+        yellow "=== Finished building Jasix ==="
+}  # endBanner()
+
+parseOptions "$@"
+verifyParams
+introBanner
+gitLatest
+buildEverything
+endBanner
