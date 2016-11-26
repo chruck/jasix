@@ -85,6 +85,10 @@ gitLatest()
 
 buildEverything()
 {
+        if [[ 0 != ${rc} ]]; then
+                return
+        fi
+
         subdirs="0-before_reboot 1-after_reboot"
 
         for i in ${subdirs}; do
@@ -93,6 +97,8 @@ buildEverything()
                         ./build
                         popd
                 fi
+
+                green "Stage ${i} completed"
         done
 }   # buildEverything()
 
