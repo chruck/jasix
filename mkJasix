@@ -109,7 +109,7 @@ buildEverything()
                         popd
                 fi
 
-                green "Stage ${i} completed"
+                boldgreen "Stage ${i} completed"
         done
 }   # buildEverything()
 
