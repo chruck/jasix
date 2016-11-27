@@ -103,13 +103,21 @@ buildEverything()
         subdirs="0-before_reboot 1-after_reboot"
 
         for i in ${subdirs}; do
+                boldgreen "Beginning stage ${i}"
+
                 if [[ ! -e ${i}/.completed ]]; then
                         pushd ${i}
                         ./build
+                        rc=$?
+                        if [[ 0 != ${rc} ]]; then
+                                red "Stage ${i} failed"
+                                return
+                        fi
                         popd
+                        boldgreen "Stage ${i} completed"
+                else
+                        boldgreen "Stage ${i} already completed"
                 fi
-
-                boldgreen "Stage ${i} completed"
         done
 }   # buildEverything()
 
