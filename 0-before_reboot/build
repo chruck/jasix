@@ -21,6 +21,11 @@ for i in ${SUBDIRS}; do
         if [[ ! -e ${i}/.completed ]]; then
                 pushd ${i}
                 ./build
+                rc=$?
+                if [[ 0 != ${rc} ]]; then
+                        red "    Substage ${i} failed"
+                        exit ${rc}
+                fi
                 popd
         fi
         green "    Substage ${i} completed"
@@ -29,6 +34,11 @@ done
 for i in ${PROGS}; do
         green "    Beginning subprogram ${i}"
         ${i}
+        rc=$?
+        if [[ 0 != ${rc} ]]; then
+                red "    Subprogram ${i} failed"
+                exit ${rc}
+        fi
         green "    Subprogram ${i} completed"
 done
 
