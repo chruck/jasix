@@ -1,6 +1,4 @@
-#!/bin/bash -x
-
-set -e
+#!/bin/bash
 
 # Script to build components needed before reboot
 
@@ -11,17 +9,26 @@ boldgreen "Building 0-before_reboot"
 SUBDIRS=
 
 for i in *; do
-    if [[ -d ${i} ]]; then
-        SUBDIRS="${SUBDIRS} ${i}"
-    fi
+        if [[ -d ${i} ]]; then
+                SUBDIRS="${SUBDIRS} ${i}"
+        else
+                PROGS="${PROGS} ${i}"
+        fi
 done
 
-for i in ${subdirs}; do
-    if [[ ! -e ${i}/.completed ]]; then
-        pushd ${i}
-        ./build
-        popd
-    fi
+for i in ${SUBDIRS}; do
+        if [[ ! -e ${i}/.completed ]]; then
+                pushd ${i}
+                ./build
+                popd
+        fi
+        green "    Substage ${i} completed"
+done
+
+for i in ${PROGS}; do
+        ${i}
+
+        green "    Subprogram ${i} completed"
 done
 
 yellow "Finished building 0-before_reboot"
