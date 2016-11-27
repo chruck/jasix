@@ -17,6 +17,7 @@ for i in *; do
 done
 
 for i in ${SUBDIRS}; do
+        green "    Beginning substage ${i}"
         if [[ ! -e ${i}/.completed ]]; then
                 pushd ${i}
                 ./build
@@ -26,8 +27,8 @@ for i in ${SUBDIRS}; do
 done
 
 for i in ${PROGS}; do
+        green "    Beginning subprogram ${i}"
         ${i}
-
         green "    Subprogram ${i} completed"
 done
 
