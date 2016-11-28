@@ -124,20 +124,22 @@ dlGentoo()
         local chk="$(echo ${info} |cut -f2 -d\ )"
         readonly isofile="${min}-${ver}.iso"
         readonly digestsfile="${isofile}.DIGESTS"
+        readonly urlcurrent="${urlparent}/current-${min}"
 
         rm ${digestsfile}*
-        wget ${urlparent}/current-${min}/${digestsfile}
-        #if [[ -f "${isofile}.DIGESTS" ]]; then
-                #yellow "Knoppix DVD iso found."
-                #if sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1; then
-                        #return
-                #fi
+        wget ${urlcurrent}/${digestsfile}
 
-                #rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
-        #fi
+        if [[ -f "${isofile}" ]]; then
+                yellow "Knoppix DVD iso found."
+                if head -n2 ${digestsfile} |sha512sum -c; then
+                        return
+                fi
 
-        #green "Downloading Gentoo Minimal Install CD"
-        #wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+                rm ${isofile}
+        fi
+
+        green "Downloading Gentoo Minimal Install CD"
+        wget ${urlcurrent}/${isofile}
 }  # dlGentoo()
 
 startKvm()
