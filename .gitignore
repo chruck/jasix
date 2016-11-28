@@ -15,3 +15,9 @@
 # vi editor backups
 *~
 .*~
+
+# Downloaded/Generated files
+KNOPPIX*
+*install-amd64-minimal*
+jasix.hda
+.completed
