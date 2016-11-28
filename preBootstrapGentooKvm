@@ -1,0 +1,163 @@
+#!/bin/bash
+
+##
+# @file preBootstrapDebGentooKvm
+# @author Jas Eckard <jas+jasix@eckard.com>
+#
+# @section LICENSE
+#
+# GPLv3
+#
+# @section DESCRIPTION
+#
+# This file is used to download Gentoo "Minimal Install CD" ISO, then
+# boot a KVM image into it
+
+# Return codes:  1 = bad parameter(s)
+#                2 = required parameter missing
+#                3 = required program missing
+
+readonly localDir="$(cd ${BASH_SOURCE[0]%/*} && pwd -P && cd - >/dev/null)"
+
+# To get some debug output call this file like:
+# DEBUG=true ./preBootstrapDebGentooKvm.sh ...
+
+echoStderr() { echo "$@" 1>&2; }
+
+if [[ 'x' == "x${DEBUG}" ]]; then
+        # Make `debug' a no-op
+        debug() { :; }
+else
+        debug() {
+                echoStderr -n "DEBUG ${BASH_LINENO[*]}:  "
+                echoStderr "$@"
+        }
+fi
+
+declare rc=0
+
+. ansicolors 
+
+Usage()
+{
+        cat 1>&2 <<EOFUsage
+
+Usage:  $0 [OPTION]... REQUIRED [OPTIONAL]
+
+  -h, -?, --help        Display this help and exit
+
+EOFUsage
+        exit ${rc}
+}  # Usage()
+
+parseOptions()
+{
+        debug "Original args:  $@"
+
+        local shortopts="h?" ; local longopts="help,"
+
+        debug "shortopts=${shortopts} longopts=${longopts}"
+
+        ARGS=$(getopt -o "${shortopts}" -l "${longopts}" -n "getopt.sh" -- "$@")
+
+        getoptRc=$?
+        if [[ 0 -ne "${getoptRc}" ]]; then
+                echoStderr "ERROR:  getopt called incorrectly, rc=${getoptRc}"
+                rc=1
+                exit ${rc}
+                # Alternatively, ($rc gets passed):
+                #Usage
+        fi
+
+        eval set -- "${ARGS}"
+
+        while true; do
+                param=$1
+                case "${param}" in
+                        -h|-\?|--help)
+                                debug "Asked for help"
+                                Usage
+                                ;;
+                        --)
+                                shift;
+                                break;
+                                ;;
+                        *)
+                                echoStderr "ERROR:  Unimplemented option: ${param}"
+                                break;
+                                ;;
+                esac
+        done
+
+        debug "New args:  $@"
+
+        if [[ 0 != ${rc} ]]; then
+                Usage
+        fi
+}  # parseOptions()
+
+# TODO:  Verify the parameters passed are valid
+verifyParams()
+{
+        :
+}  # verifyParams()
+
+banner()
+{
+        boldwhite "--- ${BOLDYELLOW} Jasix ${BOLDWHITE} ---"
+        boldwhite "Linux distribution scripted and customized by me, Jas"
+        echo
+}  # banner()
+
+dlGentoo()
+{
+        readonly min="install-amd64-minimal"
+        readonly latestfile="latest-${min}.txt"
+        readonly urlparent="http://distfiles.gentoo.org/releases/amd64/autobuilds"
+
+        green "Checking if download of latest Gentoo Minimal Install CD necessary"
+        rm ${latestfile}*
+        wget ${urlparent}/${latestfile}
+
+        local info="$(grep ${min} ${latestfile})"
+        local ver="$(echo ${info} |cut -f1 -d/)"
+        local chk="$(echo ${info} |cut -f2 -d\ )"
+        readonly isofile="${min}-${ver}.iso"
+        readonly digestsfile="${isofile}.DIGESTS"
+
+        rm ${digestsfile}*
+        wget ${urlparent}/current-${min}/${digestsfile}
+        #if [[ -f "${isofile}.DIGESTS" ]]; then
+                #yellow "Knoppix DVD iso found."
+                #if sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1; then
+                        #return
+                #fi
+
+                #rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+        #fi
+
+        #green "Downloading Gentoo Minimal Install CD"
+        #wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+}  # dlGentoo()
+
+startKvm()
+{
+        local KVM="$(type -p kvm)"
+
+        if [[ ! -e "${KVM}" ]]; then
+                red "Cannot find KVM in your \$PATH"
+                exit 3
+        fi
+
+        green "Starting KVM:"
+        dd if=/dev/zero of=jasix.hda bs=1G count=1
+        boldred "Once the VM is booted execute:"
+        boldwhite "wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
+        kvm -smp 2 -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
+}  # startKvm()
+
+parseOptions "$@"
+verifyParams
+banner
+dlGentoo
+startKvm
