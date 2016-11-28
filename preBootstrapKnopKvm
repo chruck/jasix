@@ -15,6 +15,7 @@
 
 # Return codes:  1 = bad parameter(s)
 #                2 = required parameter missing
+#                3 = required program missing
 
 readonly localDir="$(cd ${BASH_SOURCE[0]%/*} && pwd -P && cd - >/dev/null)"
 
@@ -110,23 +111,32 @@ banner()
 
 dlKnoppix()
 {
-        green "Downloading Knoppix image if necessary:"
+        green "Checking if download of Knoppix necessary"
+        rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1*
         wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
 
         if [[ -f KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso ]]; then
                 yellow "Knoppix DVD iso found."
-                if ! sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
-                then
-                        red "but checksum fails, re-downloading"
-                        green "Downloading Knoppix image:"
-                        rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
-                        wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+                if sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1; then
+                        return
                 fi
+
+                rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
         fi
+
+        green "Downloading Knoppix image"
+        wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
 }
 
 startKvm()
 {
+        local KVM="$(type -p kvm)"
+
+        if [[ ! -e "${KVM}" ]]; then
+                red "Cannot find KVM in your \$PATH"
+                exit 3
+        fi
+
         green "Starting KVM:"
         dd if=/dev/zero of=jasix.hda bs=1G count=1
         boldred "Once the VM is booted execute:"
