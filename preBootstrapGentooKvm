@@ -181,7 +181,7 @@ startKvm()
                 exit 3
         fi
 
-        dd if=/dev/zero of=jasix.hda bs=3G count=1
+        dd if=/dev/zero of=jasix.hda bs=1G count=1
 
         green "Starting KVM:"
         boldgreen "Once the VM boots, at the ${BOLDWHITE}boot:${BOLDGREEN} prompt type ${BOLDWHITE}gentoo${BOLDGREEN} or ${BOLDWHITE}gentoo-nofb"
