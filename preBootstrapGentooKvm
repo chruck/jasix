@@ -109,15 +109,31 @@ banner()
         echo
 }  # banner()
 
-dlGentoo()
+download()
+{
+        local url="$@"
+
+        green "Downloading ${url}"
+
+        if ! wget "${url}"; then
+                local file=$(echo ${url} |rev |cut -d/ -f1 |rev)
+
+                rm -f ${file}*
+                sleep 1
+                download "${url}"
+        fi
+
+}  # download()
+
+dlInfoFiles()
 {
         readonly min="install-amd64-minimal"
         readonly latestfile="latest-${min}.txt"
         readonly urlparent="http://distfiles.gentoo.org/releases/amd64/autobuilds"
 
         green "Checking if download of latest Gentoo Minimal Install CD necessary"
-        rm ${latestfile}*
-        wget ${urlparent}/${latestfile}
+        rm -f ${latestfile}*
+        download "${urlparent}/${latestfile}"
 
         local info="$(grep ${min} ${latestfile})"
         local ver="$(echo ${info} |cut -f1 -d/)"
@@ -126,20 +142,34 @@ dlGentoo()
         readonly digestsfile="${isofile}.DIGESTS"
         readonly urlcurrent="${urlparent}/current-${min}"
 
-        rm ${digestsfile}*
-        wget ${urlcurrent}/${digestsfile}
+        rm -f ${digestsfile}*
+        download "${urlcurrent}/${digestsfile}"
+}  # dlInfoFiles()
 
+verifyIso()
+{
+        if head -n2 ${digestsfile} |sha512sum -c; then
+                return 0
+        fi
+
+        return 1
+}  # verifyIso()
+
+dlGentoo()
+{
         if [[ -f "${isofile}" ]]; then
-                yellow "Knoppix DVD iso found."
-                if head -n2 ${digestsfile} |sha512sum -c; then
+                yellow "Gentoo DVD iso found."
+                if verifyIso; then
                         return
                 fi
 
-                rm ${isofile}
+                rm -f ${isofile}
         fi
 
         green "Downloading Gentoo Minimal Install CD"
-        wget ${urlcurrent}/${isofile}
+        download "${urlcurrent}/${isofile}"
+
+        dlGentoo
 }  # dlGentoo()
 
 startKvm()
@@ -151,15 +181,22 @@ startKvm()
                 exit 3
         fi
 
+        dd if=/dev/zero of=jasix.hda bs=3G count=1
+
         green "Starting KVM:"
-        dd if=/dev/zero of=jasix.hda bs=1G count=1
-        boldred "Once the VM is booted execute:"
-        boldwhite "wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
-        kvm -smp 2 -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
+        boldgreen "Once the VM boots, at the ${BOLDWHITE}boot:${BOLDGREEN} prompt type ${BOLDWHITE}gentoo${BOLDGREEN} or ${BOLDWHITE}gentoo-nofb"
+        boldred "Once the VM is booted execute (optional in parentheses):"
+        boldwhite "- (passwd)"
+        boldwhite "- (/etc/init.d/sshd start)"
+        boldwhite "- (ssh -R 2222:localhost:22 ${RED}someusername${BOLDWHITE}@\$(route |grep default |awk '{print \$2}') )"
+        boldwhite "- (ssh root@localhost -p 2222)"
+        boldwhite "- wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
+        kvm -m 1G -smp 2 -cdrom ${isofile} -hda jasix.hda
 }  # startKvm()
 
 parseOptions "$@"
 verifyParams
 banner
+dlInfoFiles
 dlGentoo
 startKvm
