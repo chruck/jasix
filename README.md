@@ -26,7 +26,7 @@ Current Methodology
 - [x] Download ISO from another distro (__Knoppix__, __Gentoo__ stage 4)
 - [x] Create a __KVM__ VM
 - [x] Boot the VM into that another distro
-- [ ] Creating __btrfs__ filesystem
+- [ ] Create __btrfs__ filesystem
 - [ ] From source, install bootstrap/buildtools environment on that
       filesystem, starting with __busybox__
 - [ ] Bootstrap into that environment
