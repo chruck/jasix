@@ -23,11 +23,11 @@ wget -O - https://raw.githubusercontent.com/chruck/jasix/master/preBootstrapKnop
 
 Current Methodology
 -------------------
-[x] Download ISO from another distro (__Knoppix__, __Gentoo__ stage 4)
-[x] Create a __KVM__ VM
-[x] Boot the VM into that another distro
-[ ] Creating __btrfs__ filesystem
-[ ] From source, install bootstrap/buildtools environment on that
-    filesystem, starting with __busybox__
-[ ] Bootstrap into that environment
-[ ] Build everything else needed from source
+- [x] Download ISO from another distro (__Knoppix__, __Gentoo__ stage 4)
+- [x] Create a __KVM__ VM
+- [x] Boot the VM into that another distro
+- [ ] Creating __btrfs__ filesystem
+- [ ] From source, install bootstrap/buildtools environment on that
+      filesystem, starting with __busybox__
+- [ ] Bootstrap into that environment
+- [ ] Build everything else needed from source
