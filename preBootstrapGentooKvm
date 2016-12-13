@@ -188,8 +188,8 @@ startKvm()
         boldred "Once the VM is booted execute (optional in parentheses):"
         boldwhite "- (passwd)"
         boldwhite "- (/etc/init.d/sshd start)"
-        boldwhite "- (ssh -R 2222:localhost:22 ${RED}someusername${BOLDWHITE}@\$(route |grep default |awk '{print \$2}') )"
-        boldwhite "- (ssh root@localhost -p 2222)"
+        boldwhite "- (ssh -R 2222:localhost:22 ${RED}someusername${BOLDWHITE}@\$(route |awk 'default {print \$2}') )"
+        boldwhite "- (From the host:  ssh root@localhost -p 2222)"
         boldwhite "- wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
         kvm -m 1G -smp 2 -cdrom ${isofile} -hda jasix.hda
 }  # startKvm()
