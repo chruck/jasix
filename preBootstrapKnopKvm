@@ -107,26 +107,64 @@ banner()
         boldwhite "--- ${BOLDYELLOW} Jasix ${BOLDWHITE} ---"
         boldwhite "Linux distribution scripted and customized by me, Jas"
         echo
-}
+}  # banner()
+
+download()
+{
+        local url="$@"
+
+        green "Downloading ${url}"
+
+        if ! wget "${url}"; then
+                local file=$(echo ${url} |rev |cut -d/ -f1 |rev)
+
+                rm -f ${file}*
+                sleep 1
+                download "${url}"
+        fi
+
+}  # download()
+
+dlInfoFiles()
+{
+        readonly urlparent="http://mirrors.sonic.net/knoppix/knoppix-dvd/"
+
+        green "Checking if download of Knoppix necessary"
+        rm -f index.html*
+        download "${urlparent}"
+
+        readonly isofile="$(grep -o 'KNOPPIX[^>]*EN.iso' index.html |sort -u |tail -n1)"
+        readonly chkfile="${isofile}.sha1"
+
+        rm -f ${chkfile}*
+        download "${urlparent}/${chkfile}"
+}  # dlInfoFiles()
+
+verifyIso()
+{
+        if sha1sum -c "${chkfile}"; then
+                return 0
+        fi
+
+        return 1
+}  # verifyIso()
 
 dlKnoppix()
 {
-        green "Checking if download of Knoppix necessary"
-        rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1*
-        wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1
-
-        if [[ -f KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso ]]; then
+        if [[ -f "${isofile}" ]]; then
                 yellow "Knoppix DVD iso found."
-                if sha1sum -c KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso.sha1; then
+                if verifyIso; then
                         return
                 fi
 
-                rm KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
+                rm -f ${isofile}
         fi
 
         green "Downloading Knoppix image"
-        wget http://mirrors.sonic.net/knoppix/knoppix-dvd/KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso
-}
+        download "${urlparent}/${isofile}"
+
+        dlKnoppix
+}  # dlKnoppix()
 
 startKvm()
 {
@@ -137,15 +175,20 @@ startKvm()
                 exit 3
         fi
 
-        green "Starting KVM:"
         dd if=/dev/zero of=jasix.hda bs=1G count=1
-        boldred "Once the VM is booted execute:"
-        boldwhite "wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
-        kvm -smp 2 -cdrom KNOPPIX_V7.7.1DVD-2016-10-22-EN.iso -hda jasix.hda
-}
+
+        green "Starting KVM:"
+        boldred "Once the VM is booted execute (optional in parentheses):"
+        boldwhite "- (Start/Knoppix/Start SSH Server)"
+        boldwhite "- (In Terminal Emulator:  ssh -R 2222:localhost:22 ${RED}someusername${BOLDWHITE}@\$(route |awk 'default {print \$2}') )"
+        boldwhite "- (From the host:  ssh knoppix@localhost -p 2222)"
+        boldwhite "- wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
+        kvm -m 1G -smp 2 -cdrom ${isofile} -hda jasix.hda
+}  # startKvm()
 
 parseOptions "$@"
 verifyParams
 banner
+dlInfoFiles
 dlKnoppix
 startKvm
