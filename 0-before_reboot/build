@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Script to build components needed before reboot
 
 . ../ansicolors

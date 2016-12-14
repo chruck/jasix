@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 ##
 # @file preBootstrapDebKnopKvm
 # @author Jas Eckard <jas+jasix@eckard.com>

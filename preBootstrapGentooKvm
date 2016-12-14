@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 ##
 # @file preBootstrapDebGentooKvm
 # @author Jas Eckard <jas+jasix@eckard.com>
