@@ -1,22 +1,78 @@
 #!/bin/bash
 
-# Script to automate the build of jasix
-
+set -e
+##
+# @file build
+# @author Jas Eckard <jas+jasix@eckard.com>
+#
+# @section LICENSE
+#
+# (GPL license?)
+#
+# @section DESCRIPTION
+#
+# Script to automate the build of jasix:
 # Create build environment by installing programs needed to build
+
+# Return codes:  1 = bad parameter(s)
+#                2 = required parameter missing
+
+readonly localDir="$(cd ${BASH_SOURCE[0]%/*} && pwd -P && cd - >/dev/null)"
+
+# To get some debug output call this file like:
+# DEBUG=true ./build.sh ...
+
+echoStderr() { echo "$@" 1>&2; }
+
+if [[ 'x' == "x${DEBUG}" ]]; then
+        # Make `debug' a no-op
+        debug() { :; }
+else
+        debug() {
+                echoStderr -n "DEBUG ${BASH_LINENO[*]}:  "
+                echoStderr "$@"
+        }
+fi
+
+# Usages:
+#echo “regular stdout output”
+#echoStderr “regular stderr output”
+#debug “stderr output only seen when DEBUG set”
+
+declare rc=0
+declare optionA=0
+declare optionB=bogus
+declare REQUIRED
+declare OPTIONAL=bogus
+readonly pi="3.1415"
+
+Usage()
+{
+        cat 1>&2 <<EOFUsage
+
+Usage:  $0 [OPTION]... REQUIRED [OPTIONAL]
+
+  -a, --optionA         Description
+  -b, --optionB VAL     Desc that takes VAL
+  -h, -?, --help        Display this help and exit
+
+EOFUsage
+        exit ${rc}
+}  # Usage()
+
+
+doOtherStuff
 
 PROGRAMS=
 
-for i in *
-do
-    if [[ $(basename $0) != ${i} ]]
-    then
+for i in *; do
+    if [[ $(basename $0) != ${i} ]]; then
         PROGRAMS="${PROGRAMS} ${i}"
     fi
 done
 
 sudo yum -y install ${PROGRAMS}
 
-if [[ 0 == $? ]]
-then
+if [[ 0 == $? ]]; then
     touch .completed
 fi
