@@ -40,39 +40,27 @@ fi
 #debug “stderr output only seen when DEBUG set”
 
 declare rc=0
-declare optionA=0
-declare optionB=bogus
-declare REQUIRED
-declare OPTIONAL=bogus
-readonly pi="3.1415"
+declare PROGRAMS
 
-Usage()
+genList()
 {
-        cat 1>&2 <<EOFUsage
+        for i in *; do
+                if [[ $(basename $0) != ${i} ]]; then
+                        PROGRAMS="${PROGRAMS} ${i}"
+                fi
+        done
+}  # genList()
 
-Usage:  $0 [OPTION]... REQUIRED [OPTIONAL]
+installPkgs()
+{
+        #sudo yum -y install ${PROGRAMS}
+        sudo apt update
+        sudo apt -y install ${PROGRAMS}
 
-  -a, --optionA         Description
-  -b, --optionB VAL     Desc that takes VAL
-  -h, -?, --help        Display this help and exit
+        if [[ 0 == $? ]]; then
+                touch .completed
+        fi
+}  # installPkgs()
 
-EOFUsage
-        exit ${rc}
-}  # Usage()
-
-
-doOtherStuff
-
-PROGRAMS=
-
-for i in *; do
-    if [[ $(basename $0) != ${i} ]]; then
-        PROGRAMS="${PROGRAMS} ${i}"
-    fi
-done
-
-sudo yum -y install ${PROGRAMS}
-
-if [[ 0 == $? ]]; then
-    touch .completed
-fi
+genList
+installPkgs
