@@ -23,6 +23,35 @@ readonly RESET="\\033[0;0m"  # White on black
 readonly BOLDRED="\\033[1;31m"
 readonly BOLDGREEN="\\033[1;32m"
 
+trap trapEXIT EXIT
+trap trapINT INT
+trap trapTERM TERM
+trap trapKILL KILL
+
+trapEXIT()
+{
+        echo "${BOLDRED}Trap caught EXIT.  Exiting mkJasix."
+        exit 255
+}
+
+trapINT()
+{
+        echo "${BOLDRED}Trap caught INT.  Exiting mkJasix."
+        exit 254
+}
+
+trapTERM()
+{
+        echo "${BOLDRED}Trap caught TERM.  Exiting mkJasix."
+        exit 253
+}
+
+trapKILL()
+{
+        echo "${BOLDRED}Trap caught KILL.  Exiting mkJasix."
+        exit 252
+}
+
 Usage()
 {
         cat 1>&2 <<EOFUsage
