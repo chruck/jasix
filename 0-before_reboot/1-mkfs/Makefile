@@ -2,7 +2,8 @@
 
 # manipulation of the target
 
-${TARGET} := .complete
+TARGET := .complete
+TARGET_DEV := /dev/sda
 
 all: ${TARGET}
 
@@ -25,6 +26,7 @@ ${TARGET_DIR}:
 
 MOUNTED := ${TARGET_DIR}/.mounted
 ${MOUNTED}: ${TARGET_DIR}
+	./verifyEraseDevice ${TARGET_DEV} || exit $$?
 	sudo dd if=/dev/zero of=/dev/mmcblk0 bs=1 count=1k
 	sudo mke2fs -L olpc /dev/mmcblk0
 	sudo mount /dev/mmcblk0 $^
@@ -52,6 +54,8 @@ ${SRC_COMPLETED}: ${SRC_MAKEFILE}
 
 ${TARGET}: ${SRC_COMPLETED}
 	touch $@
+
+ifeq (0,1)
 
 # Build kernel
 cd /target/usr/src
@@ -102,3 +106,5 @@ tar xjvf gcc-4.3.3.tar.bz2
 cd gcc-4.3.3
 md5sum -c MD5SUMS
 ./configure --disable-nls --prefix=/media/olpc/usr
+
+endif
