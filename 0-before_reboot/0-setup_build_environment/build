@@ -40,16 +40,15 @@ fi
 #debug “stderr output only seen when DEBUG set”
 
 declare rc=0
-declare PROGRAMS
+readonly PROGRAMS=$(<programList)
 
-genList()
+checkIfCompleted()
 {
-        for i in *; do
-                if [[ $(basename $0) != ${i} ]]; then
-                        PROGRAMS="${PROGRAMS} ${i}"
-                fi
-        done
-}  # genList()
+        if [[ -e .completed ]] ; then
+                echo "This step is already completed."
+                exit 0
+        fi
+}
 
 installPkgs()
 {
@@ -62,5 +61,5 @@ installPkgs()
         fi
 }  # installPkgs()
 
-genList
+checkIfCompleted
 installPkgs
