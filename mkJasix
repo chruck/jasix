@@ -30,25 +30,25 @@ trap trapKILL KILL
 
 trapEXIT()
 {
-        echo "${BOLDRED}Trap caught EXIT.  Exiting mkJasix."
+        echo -e "${BOLDRED}Trap caught EXIT.  Exiting mkJasix."
         exit 255
 }
 
 trapINT()
 {
-        echo "${BOLDRED}Trap caught INT.  Exiting mkJasix."
+        echo -e "${BOLDRED}Trap caught INT.  Exiting mkJasix."
         exit 254
 }
 
 trapTERM()
 {
-        echo "${BOLDRED}Trap caught TERM.  Exiting mkJasix."
+        echo -e "${BOLDRED}Trap caught TERM.  Exiting mkJasix."
         exit 253
 }
 
 trapKILL()
 {
-        echo "${BOLDRED}Trap caught KILL.  Exiting mkJasix."
+        echo -e "${BOLDRED}Trap caught KILL.  Exiting mkJasix."
         exit 252
 }
 
