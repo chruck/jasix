@@ -182,7 +182,7 @@ startKvm()
         green "Starting KVM:"
         boldred "Once the VM is booted execute (optional in parentheses):"
         boldwhite "- (Start/Knoppix/Start SSH Server)"
-        boldwhite "- (In Terminal Emulator:  ${YELLOW}ssh -R 2222:localhost:22 ${RED}someusername${YELLOW}@\$(route |awk 'default {print \$2}')${BOLDWHITE} )"
+        boldwhite "- (In Terminal Emulator:  ${YELLOW}ssh -R 2222:localhost:22 ${RED}someusername${YELLOW}@\$(route |awk '/default/ {print \$2}')${BOLDWHITE} )"
         boldwhite "- (From the host:  ${YELLOW}ssh knoppix@localhost -p 2222${BOLDWHITE})"
         boldwhite "- wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
         kvm -m 1G -smp 2 -cdrom ${isofile} -hda jasix.hda
