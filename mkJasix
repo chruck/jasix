@@ -131,7 +131,8 @@ buildEverything()
                 return
         fi
 
-        subdirs="0-before_reboot 1-after_reboot"
+        subdirs="0-before_reboot "
+        subdirs+="1-after_reboot "
 
         for i in ${subdirs}; do
                 boldgreen "Beginning stage ${i}"
