@@ -108,10 +108,45 @@ introBanner()
         boldgreen "=== Building Jasix ==="
 }  # introBanner()
 
-verifyEraseDev()
+countdown()
 {
-        ./verifyEraseDevice /dev/sda  # ${TARGET_DEV}
+        boldred "30"
+        sleep 10
+        boldred "20"
+        sleep 10
+        boldred "10"
+        sleep 5
+        boldred -e "5 "
+        sleep 1
+        boldred -e "4 "
+        sleep 1
+        boldred -e "3 "
+        sleep 1
+        boldred -e "2 "
+        sleep 1
+        boldred -e "1 "
+        sleep 1
+        boldred -e "0 "
+        sleep 1
+}  # countdown()
+
+verifyEraseDevice()
+{
+        . ansicolors
+
+        local device=$@
+
+        boldred "This will erase ${device}.  If you do not want this to happen, press CTRL-C within 30 seconds:"
+
+        countdown
+        green "Proceeding to reformat ${device}."
+
+        if [[ "xy" != "x${ERASE}" ]]; then
+                echo "User chose not to erase ${device}.  Cancelled."
+                exit 3
+        fi
 }  # verifyEraseDevice()
+
 
 gitLatest()
 {
@@ -189,7 +224,7 @@ parseOptions "$@"
 verifyParams
 introBanner
 gitLatest
-verifyEraseDev
+verifyEraseDevice /dev/sda
 buildEverything
 reportError
 endBanner
