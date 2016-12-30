@@ -53,8 +53,8 @@ checkIfCompleted()
 installPkgs()
 {
         #sudo yum -y install ${PROGRAMS}
-        #sudo apt update
-        #sudo apt -y install ${PROGRAMS}
+        sudo apt update
+        sudo apt -y install ${PROGRAMS}
 
         if [[ 0 == $? ]]; then
                 touch .completed
