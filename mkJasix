@@ -116,17 +116,17 @@ countdown()
         sleep 10
         boldred "10"
         sleep 5
-        boldred -e "5 "
+        boldred "5"
         sleep 1
-        boldred -e "4 "
+        boldred "4"
         sleep 1
-        boldred -e "3 "
+        boldred "3"
         sleep 1
-        boldred -e "2 "
+        boldred "2"
         sleep 1
-        boldred -e "1 "
+        boldred "1"
         sleep 1
-        boldred -e "0 "
+        boldred "0"
         sleep 1
 }  # countdown()
 
