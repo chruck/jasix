@@ -108,6 +108,11 @@ introBanner()
         boldgreen "=== Building Jasix ==="
 }  # introBanner()
 
+verifyEraseDev()
+{
+        verifyEraseDevice /dev/sda  # ${TARGET_DEV}
+}  # verifyEraseDevice()
+
 gitLatest()
 {
         if [[ -d jasix/.git ]]; then
@@ -184,6 +189,7 @@ parseOptions "$@"
 verifyParams
 introBanner
 gitLatest
+verifyEraseDev
 buildEverything
 reportError
 endBanner
