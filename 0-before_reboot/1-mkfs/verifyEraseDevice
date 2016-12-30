@@ -134,7 +134,7 @@ verifyEraseDevice()
 
         read -p "This will erase ${device}.  Are you sure? [yN] " ERASE
 
-        if [[ "xy" == "x${ERASE}" ]]; then
+        if [[ "xy" != "x${ERASE}" ]]; then
                 echo "User chose not to erase ${device}.  Cancelled."
                 exit 3
         fi
