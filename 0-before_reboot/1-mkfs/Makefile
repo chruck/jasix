@@ -26,7 +26,7 @@ ${TARGET_DIR}:
 
 MOUNTED := ${TARGET_DIR}/.mounted
 ${MOUNTED}: ${TARGET_DIR}
-	./verifyEraseDevice ${TARGET_DEV} || exit $$?
+	#./verifyEraseDevice ${TARGET_DEV} || exit $$?
 	sudo dd if=/dev/zero of=${TARGET_DEV} bs=1 count=1k
 	sudo mke2fs -L jasix ${TARGET_DEV}
 	sudo mount ${TARGET_DEV} $^
