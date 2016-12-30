@@ -132,17 +132,15 @@ countdown()
 
 verifyEraseDevice()
 {
-        . ansicolors
-
         local device=$@
 
         boldred "This will erase ${device}.  If you do not want this to happen, press CTRL-C within 30 seconds:"
 
         countdown
-        green "Proceeding to reformat ${device}."
+        boldgreen "Proceeding to reformat ${device}."
 
         if [[ "xy" != "x${ERASE}" ]]; then
-                echo "User chose not to erase ${device}.  Cancelled."
+                boldgreen "User chose not to erase ${device}.  Cancelled."
                 exit 3
         fi
 }  # verifyEraseDevice()
