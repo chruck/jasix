@@ -110,7 +110,7 @@ introBanner()
 
 verifyEraseDev()
 {
-        verifyEraseDevice /dev/sda  # ${TARGET_DEV}
+        ./verifyEraseDevice /dev/sda  # ${TARGET_DEV}
 }  # verifyEraseDevice()
 
 gitLatest()
