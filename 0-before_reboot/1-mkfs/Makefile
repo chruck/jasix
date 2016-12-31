@@ -7,18 +7,6 @@ TARGET_DEV := /dev/sda
 
 all: ${TARGET}
 
-# Remove partitions on SD card
-#echo -e "d\nd\nw\n" | sudo fdisk /dev/mmcblk0
-#sudo ( fdisk /dev/mmcblk0 <<EOF
-#sudo fdisk /dev/mmcblk0 <<EOF
-#su root fdisk /dev/mmcblk0 <<EOF
-#d
-#d
-#w
-#EOF
-#)
-#sudo { echo -e "d\nd\nw\n" | fdisk /dev/mmcblk0 }
-
 TARGET_DIR := /target
 #.PHONY: ${TARGET_DIR}
 ${TARGET_DIR}:
@@ -26,11 +14,10 @@ ${TARGET_DIR}:
 
 MOUNTED := ${TARGET_DIR}/.mounted
 ${MOUNTED}: ${TARGET_DIR}
-	#./verifyEraseDevice ${TARGET_DEV} || exit $$?
 	sudo dd if=/dev/zero of=${TARGET_DEV} bs=1 count=1k
 	sudo mke2fs -L jasix ${TARGET_DEV}
 	sudo mount ${TARGET_DEV} $^
-	sudo chown -R knoppix $^
+	#sudo chown -R knoppix $^
 	touch $@
 
 # Build target directory structure
@@ -46,6 +33,7 @@ ${SRC_ROOT} ${BOOT_DIR}: ${MOUNTED}
 
 SRC_MAKEFILE := ${SRC_ROOT}/Makefile
 ${SRC_MAKEFILE}: ${SRC_ROOT}
+	pwd
 	${INSTALL} Makefile.srcdir $@
 
 SRC_COMPLETED := ${SRC_ROOT}/.completed.preboot
