@@ -33,8 +33,7 @@ ${SRC_ROOT} ${BOOT_DIR}: ${MOUNTED}
 
 SRC_MAKEFILE := ${SRC_ROOT}/Makefile
 ${SRC_MAKEFILE}: ${SRC_ROOT}
-	pwd
-	${INSTALL} Makefile.srcdir $@
+	install Makefile.srcdir $@
 
 SRC_COMPLETED := ${SRC_ROOT}/.completed.preboot
 ${SRC_COMPLETED}: ${SRC_MAKEFILE}
