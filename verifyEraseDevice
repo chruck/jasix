@@ -160,11 +160,6 @@ verifyEraseDevice()
 
         countdown
         green "Proceeding to reformat ${device}."
-
-        if [[ "xy" != "x${ERASE}" ]]; then
-                echo "User chose not to erase ${device}.  Cancelled."
-                exit 3
-        fi
 }  # verifyEraseDevice()
 
 parseOptions "$@"
