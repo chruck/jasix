@@ -2,7 +2,7 @@
 
 # manipulation of the target
 
-${TARGET} := .complete
+TARGET := .complete
 
 all: ${TARGET}
 
