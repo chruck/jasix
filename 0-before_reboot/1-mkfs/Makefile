@@ -22,9 +22,6 @@ ${MOUNTED}: ${TARGET_DIR}
 
 # Build target directory structure
 #mkdir -p usr/bin bin sbin etc tmp proc sys dev boot/grub var/log usr/share usr/src usr/sbin usr/lib lib/modules var/spool var/lock mnt 
-#sudo mkdir -p usr/src
-#sudo chown olpc usr/src/
-#sudo mkdir -p boot
 
 TGT_USR := ${TARGET_DIR}/usr
 TGT_BOOT := ${TARGET_DIR}/boot
