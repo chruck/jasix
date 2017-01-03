@@ -18,7 +18,7 @@ ${MOUNTED}: ${TARGET_DIR}
 	sudo mke2fs -L jasix ${TARGET_DEV}
 	sudo mount ${TARGET_DEV} $^
 	#sudo chown -R knoppix $^
-	touch $@
+	sudo touch $@
 
 # Build target directory structure
 #mkdir -p usr/bin bin sbin etc tmp proc sys dev boot/grub var/log usr/share usr/src usr/sbin usr/lib lib/modules var/spool var/lock mnt 
