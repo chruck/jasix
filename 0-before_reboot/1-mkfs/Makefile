@@ -26,18 +26,24 @@ ${MOUNTED}: ${TARGET_DIR}
 #sudo chown olpc usr/src/
 #sudo mkdir -p boot
 
-SRC_ROOT := ${TARGET_DIR}/usr/src
-BOOT_DIR := ${TARGET_DIR}/boot
-${SRC_ROOT} ${BOOT_DIR}: ${MOUNTED}
-	mkdir -p $@
+TGT_USR := ${TARGET_DIR}/usr
+TGT_BOOT := ${TARGET_DIR}/boot
+${TGT_USR} ${TGT_BOOT}: ${MOUNTED}
+	sudo mkdir -p $@
+	sudo chmod 755 $@
 
-SRC_MAKEFILE := ${SRC_ROOT}/Makefile
-${SRC_MAKEFILE}: ${SRC_ROOT}
+TGT_SRC := ${TGT_USR}/src
+${TGT_SRC}: ${TGT_USR}
+	sudo mkdir -p $@
+	sudo chmod 777 $@
+
+SRC_MAKEFILE := ${TGT_SRC}/Makefile
+${SRC_MAKEFILE}: ${TGT_SRC}
 	install Makefile.srcdir $@
 
-SRC_COMPLETED := ${SRC_ROOT}/.completed.preboot
+SRC_COMPLETED := ${TGT_SRC}/.completed.preboot
 ${SRC_COMPLETED}: ${SRC_MAKEFILE}
-	${MAKE} -C ${SRC_ROOT} ${SRC_COMPLETED}
+	${MAKE} -C ${TGT_SRC} ${SRC_COMPLETED}
 
 ${TARGET}: ${SRC_COMPLETED}
 	touch $@
