@@ -11,7 +11,7 @@ all: ${SRC_MAKEFILE}
 
 ${SRC_MAKEFILE}: ${TGT_SRC}
 	install Makefile.srcdir $@
-	${MAKE} -C $>
+	${MAKE} -C $<
 
 ifeq (0,1)
 
