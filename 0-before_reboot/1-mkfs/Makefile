@@ -4,10 +4,13 @@
 
 TARGET := .complete
 TARGET_DEV := /dev/sda
-
-all: ${TARGET}
-
 TARGET_DIR := /target
+TGT_USR := ${TARGET_DIR}/usr
+TGT_SRC := ${TGT_USR}/src
+
+#all: ${TARGET}
+all: ${TGT_SRC}
+
 #.PHONY: ${TARGET_DIR}
 ${TARGET_DIR}:
 	sudo mkdir -p $@
@@ -23,13 +26,11 @@ ${MOUNTED}: ${TARGET_DIR}
 # Build target directory structure
 #mkdir -p usr/bin bin sbin etc tmp proc sys dev boot/grub var/log usr/share usr/src usr/sbin usr/lib lib/modules var/spool var/lock mnt 
 
-TGT_USR := ${TARGET_DIR}/usr
 TGT_BOOT := ${TARGET_DIR}/boot
 ${TGT_USR} ${TGT_BOOT}: ${MOUNTED}
 	sudo mkdir -p $@
 	sudo chmod 755 $@
 
-TGT_SRC := ${TGT_USR}/src
 ${TGT_SRC}: ${TGT_USR}
 	sudo mkdir -p $@
 	sudo chmod 777 $@
