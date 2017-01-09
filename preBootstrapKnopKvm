@@ -184,7 +184,8 @@ startKvm()
         boldwhite "- (Start/Knoppix/Start SSH Server)"
         boldwhite "- (In Terminal Emulator:  ${YELLOW}ssh -R 2222:localhost:22 ${RED}someusername${YELLOW}@\$(route |awk '/default/ {print \$2}')${BOLDWHITE} )"
         boldwhite "- (From the host:  ${YELLOW}ssh knoppix@localhost -p 2222${BOLDWHITE} )"
-        boldwhite "- ${YELLOW}wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh ${BOLDRED}NOTE:  THIS WILL ERASE /dev/sda!!!"
+        boldwhite "- ${YELLOW}wget -O - https://raw.githubusercontent.com/chruck/jasix/master/mkJasix | sh"
+        boldred "  NOTE:  THIS WILL ERASE /dev/sda!!!"
         kvm -m 1G -smp 2 -cdrom ${isofile} -hda jasix.hda
 }  # startKvm()
 
