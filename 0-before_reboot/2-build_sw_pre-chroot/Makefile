@@ -9,6 +9,9 @@ SRC_MAKEFILE := ${TGT_SRC}/Makefile
 #all: ${TARGET}
 all: ${SRC_MAKEFILE}
 
+clean:
+	${RM} ${SRC_MAKEFILE}
+
 ${SRC_MAKEFILE}: ${TGT_SRC}
 	install Makefile.srcdir $@
 	${MAKE} -C $<
