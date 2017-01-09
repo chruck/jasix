@@ -34,6 +34,8 @@ ${TGT_SRC}: ${TGT_USR}
 	sudo mkdir -p $@
 	sudo chmod 777 $@
 
+ifeq (0,1)
+
 SRC_MAKEFILE := ${TGT_SRC}/Makefile
 ${SRC_MAKEFILE}: ${TGT_SRC}
 	install Makefile.srcdir $@
@@ -44,8 +46,6 @@ ${SRC_COMPLETED}: ${SRC_MAKEFILE}
 
 ${TARGET}: ${SRC_COMPLETED}
 	touch $@
-
-ifeq (0,1)
 
 # Build kernel
 cd /target/usr/src
